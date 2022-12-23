@@ -48,6 +48,14 @@ h1{
   color: rgb(0, 190, 0);
 }
 
+table, td, th, tr{
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid;
+  max-width: 100%;
+}
+
 img{
   display: block;
   margin-left: auto;
