@@ -1,4 +1,13 @@
-# Hacking the Oscar
+# Hacking the Oscars
+
+
+[Click here](https://github.com/epfl-ada/ada-2022-project-adlucere2022) to see the repository of this project.
+## Team AdLluCeRe
+
+* Adrián Augusto Ferrer Orgaz
+* Lluka Stojollari
+* Cecilia Stella Mannik
+* Raphael Rakotomahanina
 
 ## Abstract
 
@@ -8,10 +17,6 @@ In this project we attempt to gain a deeper understanding of what makes a movie 
 ## Structure 
 
 ```bash
-
-├── css
-|    ├── style_1.css                               : contains the first template for the html data story.
-|    ├── style_2.css                               : contains the first template for the html data story.
 |
 ├── data
 |    ├── CMU                                       : contains all the dataset required for this project.
@@ -19,7 +24,6 @@ In this project we attempt to gain a deeper understanding of what makes a movie 
 |    ├── plot                                      : contains the temporary saved dataset after preproccesing.
 |
 ├── figs                                           : contains all the images that are used in the data story .
-├── img                                            : contains the oscar trophy image.
 |
 ├── src
 │   ├── Latent_Dirichlet_Allocation.ipynb          : notebook performing LDA analysis finding latent topics.
@@ -29,44 +33,36 @@ In this project we attempt to gain a deeper understanding of what makes a movie 
 |   ├── plot_summary_NLP_processing.ipynb          : notebook that contains NLP processing on plot summaries for each movie.
 |   ├── jaccard_clustering.ipynb                   : notebook performing the jaccard approach for clustering purposes over the plot summaries.
 |
-|
 ├── README.md
-├── index.html                                     : contains the html implementation of our data story.
 ```
 ## Research Questions
 
-* Is it possible to relevantly assemble movies between each others?
-* In that case, what would be the most significant features to seperate movies? 
-* Are those significant features always the same over time? 
-* Do these clusters allow us to predict the imdb score nowadays?
+* Can we profile successful movies?
+* What would be the most significant features to seperate movies? 
+* How much are plot summaries helpful in identifying "5-star" movies?
+
+### Datasets
+Our [main dataset](http://www.cs.cmu.edu/~ark/personas/) contains the data from Wikipedia + aligned metadata extracted from Freebase.
+[IMDB dataset](https://www.imdb.com/interfaces/): included as to enrich the selected dataset's features. After analysis only the IMDB score was kept. Despite leading to a decreasing number of complete datapoints (around 20 to 25% of losses), we decided to perform the merge to obtain this interesting score. In order to deal with the data size of 100GB, we perform the analysis and the data extraction on a local machine (code provided on the notebook) before exporting the resulting dataframe ('movie_data_imdbscores.csv') on this GitHub repository.Finally we merged the 5 initial dataframes into one dataframe with the objective of completing missing values through common features.
+
+### Data Preprocessing and Feature Extraction
+
+Convertion of string features that combine all languages, countries and genres of a given movies into more computational-friendly features such as several columns in the main dataframe. Correcting repetitive values that are seen as different e.g. different english languages. Selecting only the most present languages, countries and genres to reduce the number of different categories.Creation of new features that appear relevant such as gender ratio, number of positive words in the plot, indicators for translations given the most present languages. Testing some agglomerative clustering on text data using Jaccard distance on word sets.  Basic NLP processing of plot summaries and titles such as stopwords removal, performing lemmatization , punctuantion removal also we removed digits and one letter strings for ease of analysis and performing LDA topic modeling.
+
+### Plot Summary Encoding
+Using plot summaries in the analysis, we perform “feature engineering” on them and encode them into a numerical representation for further analysis.
+We generate two different representations of plot summaries with two different techniques.
+
+#### LDA
+So our first approach is performing LDA topic modeling and find the latent topic ditribution over the movies.We used the coherence score to compare the models in order to fine-tune the topic parameter for the LDA technique, and in the end we chose the model with the lowest score. We also extract a list of "prototype" movies for each topic, namely the top five weighted probability movies on each topic based on the movie-topic matrix distribution.
+
+#### Factor Analysis
+As our second approach we manage to make three significant separations of the movies based on plot summaries depending on whether they “belong” to one of 3 computed categories named factors. We assigned each movie to one of them and since we have three groups of movies we perform statistical analysis running T-tests on mean proportions for our categorical variables and means for the numeric variables.
+
+### Statistical IMDb Score Analysis
+For the statistical analysis part we first discretize the imdb average rating into 5 quantiles analogously to ratings in terms of number of stars. We then split the dataset into two categories: movies with 5-star ratings and movies with ratings below 5 stars.First, we conduct t-tests to determine if the difference in the mean values of the features between 5-star and non-5-star movies is statistically significant.This requires a large number of comparisons, thus the standard p-value of 0.05 needs to be corrected.We therefore sort the features by increasing order of p-value and in the end we filter out the features most likely to have a strong effect on success by analyzing the mean differences between the features after standardization.
 
 
-## Additional Datasets
+#### For more advices how to hack Oscars , you should go through the data story. Happy hacking!
 
-[IMDB dataset](https://www.imdb.com/interfaces/): included as to enrich the selected dataset's features. After analysis only the IMDB score was kept. Despite leading to a decreasing number of complete datapoints (around 20 to 25% of losses), we decided to perform the merge to obtain this interesting score. In order to deal with the data size of 100GB, we perform the analysis and the data extraction on a local machine (code provided on the notebook) before exporting the resulting dataframe ('movie_data_imdbscores.csv') on this GitHub repository. 
-
-## Methods
-
-### Dataset Description
-
-Merge of the 5 initial dataframes into one dataframe with the objective of completing missing values through common features. Conversion of some feature in the datetime format. Plot of the feature missing values ratio.
-
-### Preprocessing
-
-Convertion of string features that combine all languages, countries and genres of a given movies into more computational-friendly features such as several columns in the main dataframe. Correcting repetitive values that are seen as different e.g. different english languages. Selecting only the most present languages, countries and genres to reduce the number of different categories.  Basic NLP processing of plot summaries and titles for ease of analysis.
-
-### Feature Extraction
-
-Creation of new features that appear relevant such as gender ratio, number of positive words in the plot, indicators for translations given the most present languages. Testing some agglomerative clustering on text data using Jaccard distance on word sets.
-
-### IMDB Processing
-
-Merge based on the movie title of the IMDB dataset in order to obtain the score given by the public.
-
-## Team AdLluCeRe
-
-* Adrián
-* Lluka
-* Cecilia
-* Raphael
 
