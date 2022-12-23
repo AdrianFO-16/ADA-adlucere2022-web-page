@@ -71,7 +71,10 @@ img{
   justify-content: space-around;
   flex-direction: row;
   align-items: center;
-  overflow: scroll;
+}
+
+.row img{
+  max-width: 33%;
 }
 
 .column{
@@ -271,12 +274,6 @@ h1{
 
 .command-window p span{
   font-size: 0.7rem;
-}
-
-img{
-  
-  max-width: 95%;
-
 }
 
 .command-window::after{
