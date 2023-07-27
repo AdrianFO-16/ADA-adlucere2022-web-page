@@ -2,6 +2,8 @@
 
 
 [Click here](https://github.com/epfl-ada/ada-2022-project-adlucere2022) to see the repository of this project.
+
+[Click here](https://adrianfo-16.github.io/ADA-adlucere2022-web-page/) to see the data story page.
 ## Team AdLluCeRe
 
 * Adrián Augusto Ferrer Orgaz
